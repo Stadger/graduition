@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.javaops.topjava.web.user.UserTestData.*;
+import static ru.javaops.topjava.UserTestData.*;
 
 class AdminUserControllerTest extends AbstractControllerTest {
 
@@ -160,7 +160,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createInvalid() throws Exception {
-        User invalid = new User(null, null, "", "newPass", 7300, Role.USER, Role.ADMIN);
+        User invalid = new User(null, null, "", "newPass", Role.USER, Role.ADMIN);
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(invalid, "newPass")))
@@ -210,7 +210,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     @WithUserDetails(value = ADMIN_MAIL)
     void createDuplicate() throws Exception {
-        User expected = new User(null, "New", USER_MAIL, "newPass", 2300, Role.USER, Role.ADMIN);
+        User expected = new User(null, "New", USER_MAIL, "newPass", Role.USER, Role.ADMIN);
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(expected, "newPass")))

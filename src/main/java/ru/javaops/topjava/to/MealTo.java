@@ -13,15 +13,12 @@ public class MealTo extends BaseTo {
 
     String description;
 
-    int calories;
-
     boolean excess;
 
-    public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
+    public MealTo(Integer id, LocalDateTime dateTime, String description, boolean excess) {
         super(id);
         this.dateTime = dateTime;
         this.description = description;
-        this.calories = calories;
         this.excess = excess;
     }
 }

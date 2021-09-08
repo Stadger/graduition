@@ -1,19 +1,41 @@
-INSERT INTO USERS (name, email, password, calories_per_day)
-VALUES ('User', 'user@yandex.ru', '{noop}password', 2005),
-       ('Admin', 'admin@gmail.com', '{noop}admin', 1900);
+DELETE FROM vote;
+DELETE FROM dish;
+DELETE FROM RESTAURANT;
+DELETE FROM user_roles;
+DELETE FROM users;
+
+INSERT INTO USERS (name, email, password)
+VALUES ('User', 'user@yandex.ru', '{noop}password'),
+       ('Admin', 'admin@gmail.com', '{noop}admin'),
+       ('User2', 'user2@yandex.ru', '{noop}password');
 
 INSERT INTO USER_ROLES (role, user_id)
 VALUES ('USER', 1),
        ('ADMIN', 2),
-       ('USER', 2);
+       ('USER', 2),
+       ('USER', 3);
 
-INSERT INTO MEALS (date_time, description, calories, user_id)
-VALUES ('2020-01-30 10:00:00', 'Завтрак', 500, 1),
-       ('2020-01-30 13:00:00', 'Обед', 1000, 1),
-       ('2020-01-30 20:00:00', 'Ужин', 500, 1),
-       ('2020-01-31 0:00:00', 'Еда на граничное значение', 100, 1),
-       ('2020-01-31 10:00:00', 'Завтрак', 500, 1),
-       ('2020-01-31 13:00:00', 'Обед', 1000, 1),
-       ('2020-01-31 20:00:00', 'Ужин', 510, 1),
-       ('2020-01-31 14:00:00', 'Админ ланч', 510, 2),
-       ('2020-01-31 21:00:00', 'Админ ужин', 1500, 2);
+INSERT INTO RESTAURANT (name)
+VALUES ('FirstRest'),
+       ('SecondRest'),
+       ('ThirdRest');
+
+INSERT INTO DISH (name, created, restaurant_id, price)
+VALUES ('soup FirstRest', CURRENT_DATE, 1, 500),
+       ('pasta FirstRest', CURRENT_DATE, 1, 300),
+       ('coffe FirstRest', CURRENT_DATE, 1, 200),
+       ('soup SecondRest', CURRENT_DATE, 2, 500),
+       ('pasta SecondRest', '2021-08-25', 2, 300),
+       ('coffe SecondRest', '2021-08-25', 2, 200),
+       ('soup ThirdRest', '2021-08-25', 3, 200),
+       ('pasta ThirdRest', '2021-08-25', 3, 300),
+       ('coffe ThirdRest', '2021-08-25', 3, 400);
+
+INSERT INTO VOTE (created, restaurant_id, user_id)
+VALUES ('2021-08-25', 1, 1),
+       ('2021-08-25', 1, 2),
+       ('2021-08-25', 2, 3),
+       (CURRENT_DATE, 2, 1),
+       (CURRENT_DATE, 3, 2),
+       (CURRENT_DATE, 3, 3);
+

@@ -58,30 +58,29 @@ public class User extends NamedEntity implements HasIdAndEmail {
     @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
     @OnDelete(action= OnDeleteAction.CASCADE)
     private Set<Role> roles;
+//
+//    @Column(name = "calories_per_day", nullable = false, columnDefinition = "int default 2000")
+//    @Range(min = 10, max = 10000)
+//    private int caloriesPerDay = DE.FAULT_CALORIES_PER_DAY;
 
-    @Column(name = "calories_per_day", nullable = false, columnDefinition = "int default 2000")
-    @Range(min = 10, max = 10000)
-    private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @OrderBy("dateTime DESC")
-    @JsonManagedReference
-    @OnDelete(action = OnDeleteAction.CASCADE) //https://stackoverflow.com/a/44988100/548473
-    private List<Meal> meals;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+//    @OrderBy("created DESC")
+//    @JsonManagedReference
+//    @OnDelete(action = OnDeleteAction.CASCADE) //https://stackoverflow.com/a/44988100/548473
+//    private List<Vote> votes;
 
     public User(User u) {
-        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getCaloriesPerDay(), u.isEnabled(), u.getRegistered(), u.getRoles());
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
     }
 
-    public User(Integer id, String name, String email, String password, int caloriesPerDay, Role role, Role... roles) {
-        this(id, name, email, password, caloriesPerDay, true, new Date(), EnumSet.of(role, roles));
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
+        this(id, name, email, password, true, new Date(), EnumSet.of(role, roles));
     }
 
-    public User(Integer id, String name, String email, String password, int caloriesPerDay, boolean enabled, Date registered, Collection<Role> roles) {
+    public User(Integer id, String name, String email, String password, boolean enabled, Date registered, Collection<Role> roles) {
         super(id, name);
         this.email = email;
         this.password = password;
-        this.caloriesPerDay = caloriesPerDay;
         this.enabled = enabled;
         this.registered = registered;
         setRoles(roles);
