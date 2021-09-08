@@ -36,6 +36,6 @@ VALUES ('2021-08-25', 1, 1),
        ('2021-08-25', 1, 2),
        ('2021-08-25', 2, 3),
        (CURRENT_DATE, 2, 1),
-       (CURRENT_DATE, 3, 2),
-       (CURRENT_DATE, 3, 3);
+       (CURRENT_DATE, 3, 2);
+  //     (CURRENT_DATE, 3, 3);
 
