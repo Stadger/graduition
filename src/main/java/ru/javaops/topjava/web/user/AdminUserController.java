@@ -36,8 +36,8 @@ public class AdminUserController extends AbstractUserController {
     }
 
     @GetMapping("/{id}/with-meals")
-    public ResponseEntity<User> getWithMeals(@PathVariable int id) {
-        return super.getWithMeals(id);
+    public ResponseEntity<User> getWithVote(@PathVariable int id) {
+        return super.getWithVote(id);
     }
 
     @Override

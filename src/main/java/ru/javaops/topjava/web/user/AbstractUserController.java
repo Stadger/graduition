@@ -35,10 +35,9 @@ public abstract class AbstractUserController {
         repository.deleteExisted(id);
     }
 
-    public ResponseEntity<User> getWithMeals(int id) {
-        log.info("getWithMeals {}", id);
+    public ResponseEntity<User> getWithVote(int id) {
+        log.info("getWithVote {}", id);
         return ResponseEntity.of(repository.getWithVote(id));
-        //return ResponseEntity.of(repository.getWithMeals(id));
     }
 
     protected User prepareAndSave(User user) {

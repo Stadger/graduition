@@ -12,6 +12,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface VoteRepository  extends BaseRepository<Vote>{
 
+    @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT v FROM Vote v WHERE v.created = :created and v.user.id = :userId")
     Optional<Vote> getByUserAndDate(LocalDate created, int userId);
 

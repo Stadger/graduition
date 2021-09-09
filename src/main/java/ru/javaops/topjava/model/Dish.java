@@ -33,6 +33,7 @@ public class Dish extends NamedEntity {
 
     @Column(name = "price", nullable = false)
     @Range(min = 10, max = 10000)
+    @NotNull
     private Integer price;
 
     public Dish(Integer id, String name, Restaurant restaurant, Integer price) {

@@ -1,7 +1,6 @@
 package ru.javaops.topjava.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -25,10 +24,8 @@ public class DishService {
     private final RestaurantRepository restaurantRepository;
 
     public Dish get(int id, int restId) {
-//        return checkNotFoundWithId(dishRepository.findById(id)
-//                .filter(dish -> dish.getRestaurant().getId() == restId)
-//                .orElse(null), id);
-        return dishRepository.get(id,restId).orElseThrow(() -> new EntityNotFoundException("Dish with id=" + id + " not found"));
+        return dishRepository.get(id, restId)
+                .orElseThrow(() -> new EntityNotFoundException("Dish with id=" + id + " not found"));
     }
 
     public void delete(int id, int restId) {
@@ -39,13 +36,14 @@ public class DishService {
         return dishRepository.getByRestaurant(restId);
     }
 
-    public List<Dish> getAllByDate(int restId,LocalDate date) {
-        return dishRepository.getByRestaurantAndDate(date,restId);
+    public List<Dish> getAllByDate(int restId, LocalDate date) {
+        return dishRepository.getByRestaurantAndDate(date, restId);
     }
+
     @Transactional
     public void update(Dish dish, int restId) {
         Assert.notNull(dish, "dish must not be null");
-        get(dish.id(),restId);
+        get(dish.id(), restId);
         dish.setRestaurant(restaurantRepository.findById(restId).get());
         checkNotFoundWithId(dishRepository.save(dish), dish.id());
     }
@@ -54,8 +52,10 @@ public class DishService {
     public Dish create(Dish dish, int restId) {
         Assert.notNull(dish, "dish must not be null");
         ValidationUtil.checkNew(dish);
-        Restaurant restaurant = restaurantRepository.findById(restId).orElseThrow(() -> new NotFoundException("Restaurant with restaurant id=" + restId + " not found"));
+        Restaurant restaurant = restaurantRepository.findById(restId)
+                .orElseThrow(() -> new NotFoundException("Restaurant with restaurant id=" + restId + " not found"));
         dish.setRestaurant(restaurant);
+        System.out.println(dish);
         return dishRepository.save(dish);
     }
 
