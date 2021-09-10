@@ -1,6 +1,8 @@
 package ru.javaops.topjava.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -28,6 +30,7 @@ public class DishService {
                 .orElseThrow(() -> new EntityNotFoundException("Dish with id=" + id + " not found"));
     }
 
+    @CacheEvict(value = "restaurantsWithDis", allEntries = true)
     public void delete(int id, int restId) {
         checkNotFoundWithId(dishRepository.delete(id, restId), id);
     }
@@ -41,6 +44,7 @@ public class DishService {
     }
 
     @Transactional
+    @CacheEvict(value = "restaurantsWithDis", key = "#dish.created")
     public void update(Dish dish, int restId) {
         Assert.notNull(dish, "dish must not be null");
         get(dish.id(), restId);
@@ -49,6 +53,7 @@ public class DishService {
     }
 
     @Transactional
+    @CacheEvict(value = "restaurantsWithDis", key = "#dish.created")
     public Dish create(Dish dish, int restId) {
         Assert.notNull(dish, "dish must not be null");
         ValidationUtil.checkNew(dish);

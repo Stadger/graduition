@@ -33,18 +33,18 @@ public class RestaurantService {
     public Restaurant get(int id) {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("restaurant with id:" + id + "not found"));
     }
-    @Cacheable("restaurants")
+
     public Restaurant getWithDish(int id, LocalDate date) {
         return repository.getWithDish(id, date).orElseThrow(() -> new EntityNotFoundException("restaurant with id:" + id + "not found"));
     }
 
-    @CacheEvict(value = "restaurants", key = "#id")
+    @CacheEvict(value = "restaurantsWithDis", allEntries = true)
     public void delete(int id) {
         repository.deleteExisted(id);
     }
 
     @Transactional
-    @CacheEvict(value = "restaurants", key = "#restaurant.id")
+    @CacheEvict(value = "restaurantsWithDis", allEntries = true)
     public void update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         Restaurant rest = get(restaurant.id());
@@ -60,6 +60,7 @@ public class RestaurantService {
         return repository.findAll(SORT_NAME);
     }
 
+    @Cacheable(value = "restaurantsWithDis", key = "#date")
     public List<Restaurant> getAllWithDish(LocalDate date) {
         return repository.getAllWithDish(date);
     }
