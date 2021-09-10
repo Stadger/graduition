@@ -6,14 +6,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.javaops.topjava.model.Restaurant;
 import ru.javaops.topjava.repository.RestaurantRepository;
 import ru.javaops.topjava.service.RestaurantService;
-import ru.javaops.topjava.to.VoteTo;
-import ru.javaops.topjava.util.VoteUtil;
-import ru.javaops.topjava.web.AuthUser;
+import ru.javaops.topjava.to.RestaurantTo;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,18 +26,15 @@ public class RestaurantController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> getWithDishes(@PathVariable int id,
-                                          @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        log.info("get Restaurant {}", id);
+                                                    @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        log.info("get Restaurant {} with dish", id);
         if (date == null) date = LocalDate.now();
-        return ResponseEntity.of(repository.getWithDish(id,date));
+        return ResponseEntity.of(repository.getWithDish(id, date));
     }
 
     @GetMapping("/all")
-    public List<Restaurant> getAllWithDishes( @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public List<Restaurant> getAllWithDishes(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         if (date == null) date = LocalDate.now();
         return service.getAllWithDish(date);
     }
-
-
-
 }

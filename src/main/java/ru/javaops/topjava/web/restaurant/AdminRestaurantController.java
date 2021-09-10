@@ -2,22 +2,21 @@ package ru.javaops.topjava.web.restaurant;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.topjava.model.Restaurant;
 import ru.javaops.topjava.repository.RestaurantRepository;
-import ru.javaops.topjava.repository.VoteRepository;
 import ru.javaops.topjava.service.RestaurantService;
-import ru.javaops.topjava.service.VoteService;
-import ru.javaops.topjava.web.AuthUser;
+import ru.javaops.topjava.to.RestaurantTo;
 
 import javax.validation.Valid;
-
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 import static ru.javaops.topjava.util.validation.ValidationUtil.assureIdConsistent;
@@ -53,7 +52,7 @@ public class AdminRestaurantController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
-        log.info("update restaurant {} for restaurantId {}", restaurant,id);
+        log.info("update restaurant {} for restaurantId {}", restaurant, id);
         assureIdConsistent(restaurant, id);
         service.update(restaurant);
     }
@@ -67,5 +66,20 @@ public class AdminRestaurantController {
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @GetMapping("rate/{id}")
+    public ResponseEntity<RestaurantTo> getWithRate(@PathVariable int id,
+                                                    @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        if (date == null) date = LocalDate.now();
+        log.info("get Restaurant {} with rating for date{}", id, date);
+        return ResponseEntity.of(service.getTo(id, date));
+    }
+
+    @GetMapping("rate/all")
+    public List<RestaurantTo> getAllWithRate(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        if (date == null) date = LocalDate.now();
+        log.info("get Restaurants with rating for date{}", date);
+        return service.getAllTo(date);
     }
 }

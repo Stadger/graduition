@@ -1,6 +1,9 @@
 package ru.javaops.topjava.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -12,8 +15,10 @@ import ru.javaops.topjava.to.RestaurantTo;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ru.javaops.topjava.util.validation.ValidationUtil.checkNotFoundWithId;
@@ -21,22 +26,25 @@ import static ru.javaops.topjava.util.validation.ValidationUtil.checkNotFoundWit
 @Service
 @AllArgsConstructor
 public class RestaurantService {
+    private static final Sort SORT_NAME = Sort.by(Sort.Direction.ASC, "name");
     private final RestaurantRepository repository;
     private final VoteRepository voteRepository;
 
     public Restaurant get(int id) {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("restaurant with id:" + id + "not found"));
     }
-
+    @Cacheable("restaurants")
     public Restaurant getWithDish(int id, LocalDate date) {
         return repository.getWithDish(id, date).orElseThrow(() -> new EntityNotFoundException("restaurant with id:" + id + "not found"));
     }
 
+    @CacheEvict(value = "restaurants", key = "#id")
     public void delete(int id) {
         repository.deleteExisted(id);
     }
 
     @Transactional
+    @CacheEvict(value = "restaurants", key = "#restaurant.id")
     public void update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         Restaurant rest = get(restaurant.id());
@@ -49,7 +57,7 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getAll() {
-        return repository.findAll();
+        return repository.findAll(SORT_NAME);
     }
 
     public List<Restaurant> getAllWithDish(LocalDate date) {
@@ -57,21 +65,22 @@ public class RestaurantService {
     }
 
     @Transactional
-    public RestaurantTo getTo(int id, LocalDate date) {
-        Restaurant rest = get(id);
-        return new RestaurantTo(rest.getId(), rest.getName(), voteRepository.countVoteByCreatedAndRestaurant(date, id));
+    public Optional<RestaurantTo> getTo(int id, LocalDate date) {
+        return
+                repository.findById(id).map(r ->
+                        new RestaurantTo(id, r.getName(), voteRepository.countVoteByCreatedAndRestaurant(date, id)));
     }
 
     @Transactional
     public List<RestaurantTo> getAllTo(LocalDate date) {
-        Map<Integer, Long> voteDay = voteRepository
+        Map<Restaurant, Long> voteDay = voteRepository
                 .findVoteByCreated(date)
                 .stream()
-                .collect(Collectors.groupingBy(Vote::getId, Collectors.counting()));
+                .collect(Collectors.groupingBy(Vote::getRestaurant, Collectors.counting()));
         return
                 getAll().stream()
-                        .map(rest -> new RestaurantTo(rest.getId(), rest.getName(), voteDay.getOrDefault(rest.getId(), 0L).intValue()))
-                        .sorted()
+                        .map(rest -> new RestaurantTo(rest.getId(), rest.getName(), voteDay.getOrDefault(rest, 0L).intValue()))
+                        .sorted(Comparator.comparing(RestaurantTo::getRating))
                         .toList();
     }
 }

@@ -31,7 +31,9 @@ public class VoteController {
     private final VoteRepository repository;
 
     @PostMapping()
+    @PutMapping()
     public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
+        //create and update
         int userId = authUser.id();
         log.info("create vote {} for user {}", restaurantId, userId);
         Vote created = service.save(userId, restaurantId, LocalDate.now());

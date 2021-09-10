@@ -61,9 +61,4 @@ public class ProfileController extends AbstractUserController {
         User user = authUser.getUser();
         prepareAndSave(UserUtil.updateFromTo(user, userTo));
     }
-
-    @GetMapping("/with-meals")
-    public ResponseEntity<User> getWithMeals(@AuthenticationPrincipal AuthUser authUser) {
-        return super.getWithVote(authUser.id());
-    }
 }

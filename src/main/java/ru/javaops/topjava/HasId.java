@@ -14,6 +14,7 @@ public interface HasId {
     }
 
     // doesn't work for hibernate lazy proxy
+    @JsonIgnore
     default int id() {
         Assert.notNull(getId(), "Entity must has id");
         return getId();

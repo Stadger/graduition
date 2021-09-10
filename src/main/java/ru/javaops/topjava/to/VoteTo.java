@@ -1,14 +1,19 @@
 package ru.javaops.topjava.to;
 
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 import ru.javaops.topjava.model.Vote;
 
 import java.time.LocalDate;
 
-public class VoteTo extends BaseTo{
-    private LocalDate created;
-    private int restaurantId;
-    private String restaurantName;
-    private int userId;
+@Value
+@EqualsAndHashCode(callSuper = true)
+public class VoteTo extends BaseTo {
+
+    LocalDate created;
+    int restaurantId;
+    String restaurantName;
+    int userId;
 
     public VoteTo(Integer id, LocalDate created, int restaurantId, String restaurantName, int userId) {
         super(id);
@@ -17,6 +22,7 @@ public class VoteTo extends BaseTo{
         this.restaurantName = restaurantName;
         this.userId = userId;
     }
+
     public VoteTo(Vote vote) {
         super(vote.getId());
         this.created = vote.getCreated();
