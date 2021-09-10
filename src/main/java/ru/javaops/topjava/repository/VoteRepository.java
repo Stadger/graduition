@@ -19,4 +19,10 @@ public interface VoteRepository  extends BaseRepository<Vote>{
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.created DESC")
     List<Vote> getAll(int userId);
+
+    @Query("SELECT COUNT(v) FROM Vote v WHERE v.created = :created and v.restaurant.id = :restaurantId")
+    int countVoteByCreatedAndRestaurant(LocalDate created, int restaurantId);
+
+    @Query("SELECT v FROM Vote v WHERE  v.created = :created ORDER BY v.restaurant.id ASC")
+    List<Vote> findVoteByCreated(LocalDate created);
 }
