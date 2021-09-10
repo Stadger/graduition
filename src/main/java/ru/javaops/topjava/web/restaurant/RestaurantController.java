@@ -34,6 +34,7 @@ public class RestaurantController {
 
     @GetMapping("/all")
     public List<Restaurant> getAllWithDishes(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        log.info("get Restaurant with dish");
         if (date == null) date = LocalDate.now();
         return service.getAllWithDish(date);
     }

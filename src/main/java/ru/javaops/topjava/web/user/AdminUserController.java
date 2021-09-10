@@ -35,11 +35,6 @@ public class AdminUserController extends AbstractUserController {
         return super.get(id);
     }
 
-    @GetMapping("/{id}/with-meals")
-    public ResponseEntity<User> getWithVote(@PathVariable int id) {
-        return super.getWithVote(id);
-    }
-
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -75,7 +70,7 @@ public class AdminUserController extends AbstractUserController {
         prepareAndSave(user);
     }
 
-    @GetMapping("/by")
+    @GetMapping("/by-email")
     public ResponseEntity<User> getByEmail(@RequestParam String email) {
         log.info("getByEmail {}", email);
         return ResponseEntity.of(repository.getByEmail(email));

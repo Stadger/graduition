@@ -46,7 +46,7 @@ class ProfileControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL))
                 .andExpect(status().isNoContent());
-        MATCHER.assertMatch(userRepository.findAll(), admin);
+        MATCHER.assertMatch(userRepository.findAll(), admin,user2);
     }
 
     @Test
@@ -76,16 +76,6 @@ class ProfileControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
 
         MATCHER.assertMatch(userRepository.getById(USER_ID), UserUtil.updateFromTo(new User(user), updatedTo));
-    }
-
-    @Test
-    @WithUserDetails(value = USER_MAIL)
-    void getWithMeals() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/with-meals"))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(WITH_MEALS_MATCHER.contentJson(user));
     }
 
     @Test

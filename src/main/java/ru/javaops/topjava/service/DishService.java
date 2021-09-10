@@ -2,7 +2,6 @@ package ru.javaops.topjava.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -63,5 +62,4 @@ public class DishService {
         System.out.println(dish);
         return dishRepository.save(dish);
     }
-
 }

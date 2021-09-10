@@ -18,7 +18,7 @@ public class UserTestData {
             MatcherFactory.usingAssertions(User.class,
 //     No need use ignoringAllOverriddenEquals, see https://assertj.github.io/doc/#breaking-changes
                     (a, e) -> assertThat(a).usingRecursiveComparison()
-                            .ignoringFields("registered", "meals.user", "password").isEqualTo(e),
+                            .ignoringFields("registered", "votes.user", "password").isEqualTo(e),
                     (a, e) -> {
                         throw new UnsupportedOperationException();
                     });
@@ -32,11 +32,6 @@ public class UserTestData {
     public static final User user = new User(USER_ID, "User", USER_MAIL, "password", Role.USER);
     public static final User admin = new User(ADMIN_ID, "Admin", ADMIN_MAIL, "admin", Role.ADMIN, Role.USER);
     public static final User user2 = new User(3, "User2", "user2@yandex.ru", "password", Role.USER);
-
-//    static {
-//        user.setMeals(meals);
-//        admin.setMeals(List.of(adminMeal2, adminMeal1));
-//    }
 
     public static User getNew() {
         return new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.USER));

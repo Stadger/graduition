@@ -58,10 +58,6 @@ public class User extends NamedEntity implements HasIdAndEmail {
     @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
     @OnDelete(action= OnDeleteAction.CASCADE)
     private Set<Role> roles;
-//
-//    @Column(name = "calories_per_day", nullable = false, columnDefinition = "int default 2000")
-//    @Range(min = 10, max = 10000)
-//    private int caloriesPerDay = DE.FAULT_CALORIES_PER_DAY;
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
 //    @OrderBy("created DESC")
