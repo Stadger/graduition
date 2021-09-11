@@ -21,10 +21,12 @@ Each restaurant provides a new menu each day.
 As a result, provide a link to github repository. It should contain the code, README.md with API documentation and couple curl commands to test it (**better - Swagger**).
 
 -----------------------------
-##REST API
+
+### REST API
+
 API documentation generate Swagger: http://localhost:8080/swagger-ui.html
 
-##Authentication requests
+### Authentication requests
 - /api/profile post: register request. Available to unregistered users
 - /api/admin/**
   - Available to admin-role users
@@ -33,6 +35,6 @@ API documentation generate Swagger: http://localhost:8080/swagger-ui.html
   - Available to registered(admin and user) users
   - use base authentication: user@yandex.ru/password
 
-##Requirements
+### Requirements
 - JDK 16
 - Maven
