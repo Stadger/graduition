@@ -13,7 +13,7 @@ import java.time.LocalTime;
 
 @UtilityClass
 public class ValidationUtil {
-    private final static LocalTime DEADLINE = LocalTime.of(23,59);
+    private final static LocalTime DEADLINE = LocalTime.of(11,0);
 
     public static void checkTimeDeadline(LocalDate date) {
         if (!date.equals(LocalDate.now()) || DEADLINE.isBefore(LocalTime.now())){
