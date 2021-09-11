@@ -10,7 +10,6 @@ import org.hibernate.validator.constraints.Range;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "created", "name"}, name = "dish_unique_restorant_date_name_idx")})

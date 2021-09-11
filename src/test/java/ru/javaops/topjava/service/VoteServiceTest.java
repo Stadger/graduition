@@ -9,6 +9,7 @@ import ru.javaops.topjava.repository.VoteRepository;
 import static ru.javaops.topjava.RestaurantTestData.RESTAURANT1_ID;
 import static ru.javaops.topjava.RestaurantTestData.RESTAURANT3_ID;
 import static ru.javaops.topjava.VoteTestData.*;
+
 class VoteServiceTest extends AbstractServiceTest {
 
     @Autowired

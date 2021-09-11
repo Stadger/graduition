@@ -8,10 +8,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"created", "user_id"}, name = "vote_unique_user_date_idx")})
@@ -19,7 +17,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true, exclude = {"user"})
-public class Vote extends BaseEntity{
+public class Vote extends BaseEntity {
 
     @Column(name = "created", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull

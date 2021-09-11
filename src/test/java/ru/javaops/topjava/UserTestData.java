@@ -1,6 +1,5 @@
 package ru.javaops.topjava;
 
-import ru.javaops.topjava.MatcherFactory;
 import ru.javaops.topjava.model.Role;
 import ru.javaops.topjava.model.User;
 import ru.javaops.topjava.util.JsonUtil;
@@ -10,10 +9,9 @@ import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.javaops.topjava.web.meal.MealTestData.*;
 
 public class UserTestData {
-    public static final MatcherFactory.Matcher<User> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered","votes","password");
+    public static final MatcherFactory.Matcher<User> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "votes", "password");
     public static MatcherFactory.Matcher<User> WITH_MEALS_MATCHER =
             MatcherFactory.usingAssertions(User.class,
 //     No need use ignoringAllOverriddenEquals, see https://assertj.github.io/doc/#breaking-changes

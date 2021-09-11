@@ -6,19 +6,13 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.javaops.topjava.model.User;
 import ru.javaops.topjava.model.Vote;
 import ru.javaops.topjava.repository.VoteRepository;
-import ru.javaops.topjava.service.VoteService;
-import ru.javaops.topjava.util.JsonUtil;
 import ru.javaops.topjava.web.AbstractControllerTest;
 
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import static ru.javaops.topjava.UserTestData.USER_MAIL;
 import static ru.javaops.topjava.VoteTestData.*;
 
@@ -34,7 +28,7 @@ class VoteControllerTest extends AbstractControllerTest {
     void createWithLocation() throws Exception {
         Vote newVote = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
-                .param("restaurantId","1"))
+                .param("restaurantId", "1"))
                 .andExpect(status().isCreated());
 
         Vote created = MATCHER.readFromJson(action);

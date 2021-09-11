@@ -1,6 +1,9 @@
 package ru.javaops.topjava.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.javaops.topjava.util.validation.NoHtml;
 
 import javax.persistence.Column;

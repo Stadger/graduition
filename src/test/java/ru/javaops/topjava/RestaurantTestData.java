@@ -3,7 +3,6 @@ package ru.javaops.topjava;
 import ru.javaops.topjava.model.Restaurant;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.javaops.topjava.DishTestData.*;
@@ -15,7 +14,7 @@ public class RestaurantTestData {
             MatcherFactory.usingAssertions(Restaurant.class,
 //     No need use ignoringAllOverriddenEquals, see https://assertj.github.io/doc/#breaking-changes
                     (a, e) -> assertThat(a).usingRecursiveComparison()
-                            .ignoringFields( "dishes.restaurant").isEqualTo(e),
+                            .ignoringFields("dishes.restaurant").isEqualTo(e),
                     (a, e) -> {
                         throw new UnsupportedOperationException();
                     });
@@ -32,6 +31,7 @@ public class RestaurantTestData {
         RESTAURANT2.setDishes(DISHES_REST2_TODAY);
         RESTAURANT3.setDishes(DISHES_REST3_TODAY);
     }
+
     public static Restaurant getNew() {
         return new Restaurant(null, "NewRest");
     }

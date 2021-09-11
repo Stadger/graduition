@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.javaops.topjava.model.Restaurant;
 import ru.javaops.topjava.repository.RestaurantRepository;
 import ru.javaops.topjava.service.RestaurantService;
-import ru.javaops.topjava.to.RestaurantTo;
 
 import java.time.LocalDate;
 import java.util.List;

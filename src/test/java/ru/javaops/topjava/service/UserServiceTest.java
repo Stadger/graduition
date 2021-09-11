@@ -8,14 +8,13 @@ import ru.javaops.topjava.model.Role;
 import ru.javaops.topjava.model.User;
 
 import javax.validation.ConstraintViolationException;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.javaops.topjava.UserTestData.*;
 
-public class UserServiceTest extends AbstractServiceTest{
+public class UserServiceTest extends AbstractServiceTest {
+
     @Autowired
     protected UserService service;
 
@@ -73,7 +72,7 @@ public class UserServiceTest extends AbstractServiceTest{
     @Test
     void getAll() {
         List<User> all = service.getAll();
-        MATCHER.assertMatch(all, admin, user,user2);
+        MATCHER.assertMatch(all, admin, user, user2);
     }
 
     @Test
