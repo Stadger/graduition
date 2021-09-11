@@ -44,7 +44,7 @@ public class RestaurantService {
     }
 
     @Transactional
-    @CacheEvict(value = "restaurantsWithDis", allEntries = true)
+    @CacheEvict(value = "restaurantsWithDish", allEntries = true)
     public void update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         Restaurant rest = get(restaurant.id());
@@ -60,7 +60,7 @@ public class RestaurantService {
         return repository.findAll(SORT_NAME);
     }
 
-    @Cacheable(value = "restaurantsWithDis", key = "#date")
+    @Cacheable(value = "restaurantsWithDish", key = "#date")
     public List<Restaurant> getAllWithDish(LocalDate date) {
         return repository.getAllWithDish(date);
     }

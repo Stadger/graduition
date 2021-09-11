@@ -29,7 +29,7 @@ public class DishService {
                 .orElseThrow(() -> new EntityNotFoundException("Dish with id=" + id + " not found"));
     }
 
-    @CacheEvict(value = "restaurantsWithDis", allEntries = true)
+    @CacheEvict(value = "restaurantsWithDish", allEntries = true)
     public void delete(int id, int restId) {
         checkNotFoundWithId(dishRepository.delete(id, restId), id);
     }
@@ -43,7 +43,7 @@ public class DishService {
     }
 
     @Transactional
-    @CacheEvict(value = "restaurantsWithDis", key = "#dish.created")
+    @CacheEvict(value = "restaurantsWithDish", allEntries = true)
     public void update(Dish dish, int restId) {
         Assert.notNull(dish, "dish must not be null");
         get(dish.id(), restId);
@@ -52,14 +52,13 @@ public class DishService {
     }
 
     @Transactional
-    @CacheEvict(value = "restaurantsWithDis", key = "#dish.created")
+    @CacheEvict(value = "restaurantsWithDish", allEntries = true)
     public Dish create(Dish dish, int restId) {
         Assert.notNull(dish, "dish must not be null");
         ValidationUtil.checkNew(dish);
         Restaurant restaurant = restaurantRepository.findById(restId)
                 .orElseThrow(() -> new NotFoundException("Restaurant with restaurant id=" + restId + " not found"));
         dish.setRestaurant(restaurant);
-        System.out.println(dish);
         return dishRepository.save(dish);
     }
 }
