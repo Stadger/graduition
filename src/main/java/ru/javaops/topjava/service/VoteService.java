@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.javaops.topjava.model.Restaurant;
 import ru.javaops.topjava.model.User;
 import ru.javaops.topjava.model.Vote;
+import ru.javaops.topjava.repository.RestaurantRepository;
 import ru.javaops.topjava.repository.UserRepository;
 import ru.javaops.topjava.repository.VoteRepository;
 
@@ -20,7 +21,7 @@ import static ru.javaops.topjava.util.validation.ValidationUtil.checkTimeDeadlin
 public class VoteService {
     private final VoteRepository repository;
     private final UserRepository userRepository;
-    private final RestaurantService restaurantService;
+    private final RestaurantRepository restaurantRepository;
 
     public Vote getByUserIdAndDate(int userId, LocalDate date) {
         return repository.getByUserAndDate(date, userId).orElseThrow(() -> new EntityNotFoundException("vote with user id:" + userId + "and date not found" + date));
@@ -32,8 +33,8 @@ public class VoteService {
 
     @Transactional
     public Vote save(int userId, int restaurantId, LocalDate date) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User with id=" + userId + " not found"));
-        Restaurant restaurant = restaurantService.get(restaurantId);
+        User user = userRepository.getById(userId);
+        Restaurant restaurant = restaurantRepository.getById(restaurantId);
         Vote vote = repository.getByUserAndDate(date, userId).orElse(new Vote(null, date, user, restaurant));
         if (!vote.isNew()) {
             checkTimeDeadline(date);

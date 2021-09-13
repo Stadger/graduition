@@ -1,5 +1,6 @@
 package ru.javaops.topjava.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.javaops.topjava.UserTestData;
@@ -17,7 +18,6 @@ class VoteServiceTest extends AbstractServiceTest {
     @Autowired
     protected VoteRepository repository;
 
-
     @Test
     void getByUserIdAndDate() {
         MATCHER.assertMatch(service.getByUserIdAndDate(UserTestData.USER_ID, VOTE_TEST_DATE), VOTE1);
@@ -31,7 +31,10 @@ class VoteServiceTest extends AbstractServiceTest {
     @Test
     void update() {
         service.save(UserTestData.USER_ID, RESTAURANT3_ID, VOTE_TEST_DATE);
-        WITH_USER_AND_REST_MATCHER.assertMatch(service.getByUserIdAndDate(UserTestData.USER_ID, VOTE_TEST_DATE), getUpdated());
+        Vote v = service.getByUserIdAndDate(UserTestData.USER_ID, VOTE_TEST_DATE);
+        MATCHER.assertMatch(service.getByUserIdAndDate(UserTestData.USER_ID, VOTE_TEST_DATE), getUpdated());
+        Assertions.assertEquals(UserTestData.USER_ID, v.getUser().getId());
+        Assertions.assertEquals(RESTAURANT3_ID, v.getRestaurant().getId());
     }
 
     @Test
@@ -40,6 +43,9 @@ class VoteServiceTest extends AbstractServiceTest {
         int newId = created.id();
         Vote newVote = getNew();
         newVote.setId(newId);
-        WITH_USER_AND_REST_MATCHER.assertMatch(repository.getById(newId), newVote);
+        Vote v = repository.getById(newId);
+        MATCHER.assertMatch(v, newVote);
+        Assertions.assertEquals(UserTestData.USER_ID, v.getUser().getId());
+        Assertions.assertEquals(RESTAURANT1_ID, v.getRestaurant().getId());
     }
 }
