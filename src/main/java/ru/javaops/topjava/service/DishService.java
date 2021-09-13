@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static ru.javaops.topjava.util.validation.ValidationUtil.checkNotFoundWithId;
+import static ru.javaops.topjava.util.validation.ValidationUtil.checkOptional;
 
 @Service
 @AllArgsConstructor
@@ -25,8 +26,7 @@ public class DishService {
     private final RestaurantRepository restaurantRepository;
 
     public Dish get(int id, int restId) {
-        return dishRepository.get(id, restId)
-                .orElseThrow(() -> new EntityNotFoundException("Dish with id=" + id + " not found"));
+        return checkOptional(dishRepository.get(id, restId),id);
     }
 
     @CacheEvict(value = "restaurantsWithDish", allEntries = true)
@@ -56,8 +56,7 @@ public class DishService {
     public Dish create(Dish dish, int restId) {
         Assert.notNull(dish, "dish must not be null");
         ValidationUtil.checkNew(dish);
-        Restaurant restaurant = restaurantRepository.findById(restId)
-                .orElseThrow(() -> new NotFoundException("Restaurant with restaurant id=" + restId + " not found"));
+        Restaurant restaurant = checkOptional(restaurantRepository.findById(restId),restId);
         dish.setRestaurant(restaurant);
         return dishRepository.save(dish);
     }

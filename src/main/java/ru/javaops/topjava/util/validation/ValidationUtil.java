@@ -8,17 +8,23 @@ import ru.javaops.topjava.error.IllegalRequestDataException;
 import ru.javaops.topjava.error.NotFoundException;
 import ru.javaops.topjava.error.VoteDeadlineException;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 @UtilityClass
 public class ValidationUtil {
-    private final static LocalTime DEADLINE = LocalTime.of(11,0);
+    private final static LocalTime DEADLINE = LocalTime.of(19,0);
 
     public static void checkTimeDeadline(LocalDate date) {
         if (!date.equals(LocalDate.now()) || DEADLINE.isBefore(LocalTime.now())){
             throw new VoteDeadlineException("Vote after deadline");
         }
+    }
+
+    public static <T> T checkOptional(Optional<T> object, int id) {
+        return object.orElseThrow(() -> new EntityNotFoundException("bean with id:" + id + "not found"));
     }
 
     public static void checkNew(HasId bean) {

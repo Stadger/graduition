@@ -14,6 +14,7 @@ import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static ru.javaops.topjava.util.validation.ValidationUtil.checkOptional;
 import static ru.javaops.topjava.util.validation.ValidationUtil.checkTimeDeadline;
 
 @Service
@@ -24,7 +25,7 @@ public class VoteService {
     private final RestaurantRepository restaurantRepository;
 
     public Vote getByUserIdAndDate(int userId, LocalDate date) {
-        return repository.getByUserAndDate(date, userId).orElseThrow(() -> new EntityNotFoundException("vote with user id:" + userId + "and date not found" + date));
+        return repository.getByUserAndDate(date, userId).orElse(null);
     }
 
     public List<Vote> getAll(int userId) {
