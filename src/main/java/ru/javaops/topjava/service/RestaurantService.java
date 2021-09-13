@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.javaops.topjava.model.Restaurant;
-import ru.javaops.topjava.model.Vote;
 import ru.javaops.topjava.repository.RestaurantRepository;
 import ru.javaops.topjava.repository.VoteRepository;
 import ru.javaops.topjava.to.RestaurantTo;
@@ -17,9 +16,7 @@ import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static ru.javaops.topjava.util.validation.ValidationUtil.checkNotFoundWithId;
 
@@ -74,13 +71,9 @@ public class RestaurantService {
 
     @Transactional
     public List<RestaurantTo> getAllTo(LocalDate date) {
-        Map<Restaurant, Long> voteDay = voteRepository
-                .findVoteByCreated(date)
-                .stream()
-                .collect(Collectors.groupingBy(Vote::getRestaurant, Collectors.counting()));
         return
                 getAll().stream()
-                        .map(rest -> new RestaurantTo(rest.getId(), rest.getName(), voteDay.getOrDefault(rest, 0L).intValue()))
+                        .map(rest -> new RestaurantTo(rest.getId(), rest.getName(), voteRepository.countVoteByCreatedAndRestaurant(date, rest.getId())))
                         .sorted(Comparator.comparing(RestaurantTo::getRating))
                         .toList();
     }
