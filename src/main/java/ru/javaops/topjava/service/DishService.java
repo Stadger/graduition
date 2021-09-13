@@ -5,14 +5,12 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import ru.javaops.topjava.error.NotFoundException;
 import ru.javaops.topjava.model.Dish;
 import ru.javaops.topjava.model.Restaurant;
 import ru.javaops.topjava.repository.DishRepository;
 import ru.javaops.topjava.repository.RestaurantRepository;
 import ru.javaops.topjava.util.validation.ValidationUtil;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class DishService {
     private final RestaurantRepository restaurantRepository;
 
     public Dish get(int id, int restId) {
-        return checkOptional(dishRepository.get(id, restId),id);
+        return checkOptional(dishRepository.get(id, restId), id);
     }
 
     @CacheEvict(value = "restaurantsWithDish", allEntries = true)
@@ -56,7 +54,7 @@ public class DishService {
     public Dish create(Dish dish, int restId) {
         Assert.notNull(dish, "dish must not be null");
         ValidationUtil.checkNew(dish);
-        Restaurant restaurant = checkOptional(restaurantRepository.findById(restId),restId);
+        Restaurant restaurant = checkOptional(restaurantRepository.findById(restId), restId);
         dish.setRestaurant(restaurant);
         return dishRepository.save(dish);
     }

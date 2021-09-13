@@ -10,11 +10,9 @@ import ru.javaops.topjava.repository.RestaurantRepository;
 import ru.javaops.topjava.repository.UserRepository;
 import ru.javaops.topjava.repository.VoteRepository;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.javaops.topjava.util.validation.ValidationUtil.checkOptional;
 import static ru.javaops.topjava.util.validation.ValidationUtil.checkTimeDeadline;
 
 @Service
