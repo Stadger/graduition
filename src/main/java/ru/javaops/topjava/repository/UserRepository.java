@@ -1,5 +1,6 @@
 package ru.javaops.topjava.repository;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 @Transactional(readOnly = true)
 public interface UserRepository extends BaseRepository<User> {
+    @Cacheable(value = "restaurantsWithDish", key = "#email")
     Optional<User> getByEmail(String email);
 
     //    https://stackoverflow.com/a/46013654/548473
