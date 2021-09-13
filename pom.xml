@@ -12,9 +12,9 @@
     <artifactId>topjava</artifactId>
     <version>1.0</version>
 
-    <name>Calories Management</name>
-    <description>Migration TopJava to Spring Boot</description>
-    <url>https://javaops.ru/view/topjava</url>
+    <name>Restaurant Vote Application</name>
+    <description>REST API application using Spring-Boot</description>
+    <url>https://github.com/Stadger/graduition.git</url>
 
     <properties>
         <java.version>16</java.version>

@@ -26,11 +26,11 @@ import java.util.Optional;
 @Slf4j
 @AllArgsConstructor
 public class VoteController {
-    static final String REST_URL = "/api/profile/vote";
+    static final String REST_URL = "/api/profile/votes";
     private final VoteService service;
     private final VoteRepository repository;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
         //create and update
         int userId = authUser.id();
@@ -42,12 +42,12 @@ public class VoteController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<VoteTo> getAll(@AuthenticationPrincipal AuthUser authUser) {
         return VoteUtil.getTos(service.getAll(authUser.id()));
     }
 
-    @GetMapping()
+    @GetMapping("/MyVote")
     public ResponseEntity<VoteTo> get(@AuthenticationPrincipal AuthUser authUser,
                                       @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("get vote {} for user {}", date, authUser.id());

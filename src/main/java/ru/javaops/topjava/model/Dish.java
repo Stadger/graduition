@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @Entity
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = {"restaurant"})
 public class Dish extends NamedEntity {
 
     @Column(name = "created", nullable = false, columnDefinition = "timestamp default now()")
@@ -31,9 +31,8 @@ public class Dish extends NamedEntity {
     private Restaurant restaurant;
 
     @Column(name = "price", nullable = false)
-    @Range(min = 10, max = 10000)
-    @NotNull
-    private Integer price;
+    @Positive
+    private int price;
 
     public Dish(Integer id, String name, Restaurant restaurant, Integer price) {
         super(id, name);

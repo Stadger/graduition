@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(callSuper = true, exclude = {"user"})
+@ToString(callSuper = true, exclude = {"user","restaurant"})
 public class Vote extends BaseEntity {
 
     @Column(name = "created", nullable = false, columnDefinition = "timestamp default now()")

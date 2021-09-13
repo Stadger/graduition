@@ -26,7 +26,7 @@ import static ru.javaops.topjava.util.validation.ValidationUtil.checkNew;
 @Slf4j
 @AllArgsConstructor
 public class AdminDishController {
-    static final String REST_URL = "/api/admin/restaurant/{restaurantId}/dish";
+    static final String REST_URL = "/api/admin/restaurant/{restaurantId}/dishes";
     private final DishService service;
     private final DishRepository repository;
 

@@ -28,7 +28,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = USER_MAIL)
     @Test
     void getAllWithDishes() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "all"))
+        perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER.contentJson(RESTAURANT1, RESTAURANT2));

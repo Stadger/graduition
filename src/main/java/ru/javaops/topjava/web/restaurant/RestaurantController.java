@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 public class RestaurantController {
-    static final String REST_URL = "/api/restaurant";
+    static final String REST_URL = "/api/restaurants";
     private final RestaurantService service;
     private final RestaurantRepository repository;
 
@@ -31,7 +31,7 @@ public class RestaurantController {
         return ResponseEntity.of(repository.getWithDish(id, date));
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public List<Restaurant> getAllWithDishes(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("get Restaurant with dish");
         if (date == null) date = LocalDate.now();

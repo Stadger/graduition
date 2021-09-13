@@ -19,7 +19,7 @@ import static ru.javaops.topjava.UserTestData.ADMIN_MAIL;
 
 class AdminDishControllerTest extends AbstractControllerTest {
 
-    static final String REST_URL = "/api/admin/restaurant/1/dish";
+    static final String REST_URL = "/api/admin/restaurant/1/dishes";
 
     @Autowired
     private DishService service;

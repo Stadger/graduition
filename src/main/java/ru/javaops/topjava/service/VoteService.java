@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.javaops.topjava.model.Restaurant;
 import ru.javaops.topjava.model.User;
 import ru.javaops.topjava.model.Vote;
+import ru.javaops.topjava.repository.UserRepository;
 import ru.javaops.topjava.repository.VoteRepository;
 
 import javax.persistence.EntityNotFoundException;
@@ -18,7 +19,7 @@ import static ru.javaops.topjava.util.validation.ValidationUtil.checkTimeDeadlin
 @AllArgsConstructor
 public class VoteService {
     private final VoteRepository repository;
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final RestaurantService restaurantService;
 
     public Vote getByUserIdAndDate(int userId, LocalDate date) {
@@ -31,7 +32,7 @@ public class VoteService {
 
     @Transactional
     public Vote save(int userId, int restaurantId, LocalDate date) {
-        User user = userService.get(userId);
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User with id=" + userId + " not found"));
         Restaurant restaurant = restaurantService.get(restaurantId);
         Vote vote = repository.getByUserAndDate(date, userId).orElse(new Vote(null, date, user, restaurant));
         if (!vote.isNew()) {
