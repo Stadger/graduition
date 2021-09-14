@@ -57,7 +57,7 @@ class VoteControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "MyVote"))
+        perform(MockMvcRequestBuilders.get(REST_URL + "vote"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472

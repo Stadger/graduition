@@ -3,6 +3,7 @@ package ru.javaops.topjava.web.vote;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -16,6 +17,7 @@ import ru.javaops.topjava.to.VoteTo;
 import ru.javaops.topjava.util.VoteUtil;
 import ru.javaops.topjava.web.AuthUser;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -32,7 +34,6 @@ public class VoteController {
 
     @PostMapping
     public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
-        //create and update
         int userId = authUser.id();
         log.info("create vote {} for user {}", restaurantId, userId);
         Vote created = service.save(userId, restaurantId, LocalDate.now());
@@ -42,12 +43,20 @@ public class VoteController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @PutMapping(value = "/vote")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
+        int userId = authUser.id();
+        log.info("update vote {} for user {}", restaurantId, userId);
+        service.save(userId, restaurantId, LocalDate.now());
+    }
+
     @GetMapping
     public List<VoteTo> getAll(@AuthenticationPrincipal AuthUser authUser) {
         return VoteUtil.getTos(service.getAll(authUser.id()));
     }
 
-    @GetMapping("/MyVote")
+    @GetMapping("/vote")
     public ResponseEntity<VoteTo> get(@AuthenticationPrincipal AuthUser authUser,
                                       @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("get vote {} for user {}", date, authUser.id());

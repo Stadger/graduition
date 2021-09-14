@@ -15,6 +15,7 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.util.List;
 
+import static ru.javaops.topjava.util.validation.ValidationUtil.checkOptional;
 import static ru.javaops.topjava.util.validation.ValidationUtil.checkTimeDeadline;
 
 @Service
