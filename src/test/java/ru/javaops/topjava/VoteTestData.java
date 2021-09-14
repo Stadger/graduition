@@ -29,17 +29,15 @@ public class VoteTestData {
                     });
     public static final int VOTE1_ID = 4;
     public static final int VOTE2_ID = 5;
-    public static final int VOTE3_ID = 6;
 
     public static final Vote VOTE0 = new Vote(1, VOTE_TEST_DATE2, UserTestData.user, RESTAURANT1);
     public static final Vote VOTE1 = new Vote(VOTE1_ID, UserTestData.user, RESTAURANT2);
     public static final Vote VOTE2 = new Vote(VOTE2_ID, UserTestData.admin, RESTAURANT3);
-    public static final Vote VOTE3 = new Vote(VOTE3_ID, UserTestData.user2, RESTAURANT3);
     public static final VoteTo VOTE1_TO = VoteUtil.getTo(VOTE1);
 
 
     public static Vote getNew() {
-        return new Vote(null, VOTE_TEST_DATE, UserTestData.user, RESTAURANT1);
+        return new Vote(null, VOTE_TEST_DATE, UserTestData.user2, RESTAURANT3);
     }
 
     public static Vote getUpdated() {

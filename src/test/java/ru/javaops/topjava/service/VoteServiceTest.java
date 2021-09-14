@@ -50,20 +50,26 @@ class VoteServiceTest extends AbstractServiceTest {
     @Test
     void create() {
         service.setClock(CLOCK_BEFORE_DEADLINE);
-        Vote created = service.save(UserTestData.USER_ID, RESTAURANT1_ID, VOTE_TEST_DATE);
+        Vote created = service.save(UserTestData.USER2_ID, RESTAURANT3_ID, VOTE_TEST_DATE);
         int newId = created.id();
         Vote newVote = getNew();
         newVote.setId(newId);
         Vote v = repository.getById(newId);
         MATCHER.assertMatch(v, newVote);
-        Assertions.assertEquals(UserTestData.USER_ID, v.getUser().getId());
-        Assertions.assertEquals(RESTAURANT1_ID, v.getRestaurant().getId());
+        Assertions.assertEquals(UserTestData.USER2_ID, v.getUser().getId());
+        Assertions.assertEquals(RESTAURANT3_ID, v.getRestaurant().getId());
     }
 
     @Test
     void createAfterDeadline() {
         service.setClock(CLOCK_AFTER_DEADLINE);
-        assertThrows(VoteDeadlineException.class, () ->
-                service.save(UserTestData.USER_ID, RESTAURANT1_ID, VOTE_TEST_DATE));
+        Vote created = service.save(UserTestData.USER2_ID, RESTAURANT3_ID, VOTE_TEST_DATE);
+        int newId = created.id();
+        Vote newVote = getNew();
+        newVote.setId(newId);
+        Vote v = repository.getById(newId);
+        MATCHER.assertMatch(v, newVote);
+        Assertions.assertEquals(UserTestData.USER2_ID, v.getUser().getId());
+        Assertions.assertEquals(RESTAURANT3_ID, v.getRestaurant().getId());
     }
 }
