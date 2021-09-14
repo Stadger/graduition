@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @ToString(callSuper = true, exclude = {"restaurant"})
 public class Dish extends NamedEntity {
 
-    @Column(name = "created", nullable = false, columnDefinition = "timestamp default now()")
+    @Column(name = "created", nullable = false, columnDefinition = "DATE default CURRENT_DATE")
     @NotNull
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDate created = LocalDate.now();
