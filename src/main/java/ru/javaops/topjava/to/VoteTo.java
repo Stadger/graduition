@@ -9,13 +9,13 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true)
 public class VoteTo extends BaseTo {
 
-    LocalDate created;
+    LocalDate votedDate;
     int restaurantId;
     String restaurantName;
 
-    public VoteTo(Integer id, LocalDate created, int restaurantId, String restaurantName) {
+    public VoteTo(Integer id, LocalDate votedDate, int restaurantId, String restaurantName) {
         super(id);
-        this.created = created;
+        this.votedDate = votedDate;
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
     }

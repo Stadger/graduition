@@ -13,6 +13,6 @@ public class VoteUtil {
     }
 
     public static VoteTo getTo(Vote vote) {
-        return new VoteTo(vote.getId(), vote.getCreated(), vote.getRestaurant().getId(), vote.getRestaurant().getName());
+        return new VoteTo(vote.getId(), vote.getVotedDate(), vote.getRestaurant().getId(), vote.getRestaurant().getName());
     }
 }

@@ -12,17 +12,17 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"created", "user_id"}, name = "vote_unique_user_date_idx")})
+@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"voted_date", "user_id"}, name = "vote_unique_user_date_idx")})
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true, exclude = {"user","restaurant"})
 public class Vote extends BaseEntity {
 
-    @Column(name = "created", nullable = false, columnDefinition = "DATE default CURRENT_DATE")
+    @Column(name = "voted_date", nullable = false, columnDefinition = "DATE default CURRENT_DATE")
     @NotNull
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDate created = LocalDate.now();
+    private LocalDate votedDate = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -42,9 +42,9 @@ public class Vote extends BaseEntity {
         this.restaurant = restaurant;
     }
 
-    public Vote(Integer id, LocalDate created, User user, Restaurant restaurant) {
+    public Vote(Integer id, LocalDate votedDate, User user, Restaurant restaurant) {
         super(id);
-        this.created = created;
+        this.votedDate = votedDate;
         this.user = user;
         this.restaurant = restaurant;
     }

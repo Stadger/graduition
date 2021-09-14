@@ -31,11 +31,11 @@ VALUES ('soup FirstRest', CURRENT_DATE, 1, 500),
        ('pasta ThirdRest', '2021-08-25', 3, 300),
        ('coffe ThirdRest', '2021-08-25', 3, 400);
 
-INSERT INTO VOTE (created, restaurant_id, user_id)
+INSERT INTO VOTE (voted_date, restaurant_id, user_id)
 VALUES ('2021-08-25', 1, 1),
        ('2021-08-25', 1, 2),
        ('2021-08-25', 2, 3),
        (CURRENT_DATE, 2, 1),
-       (CURRENT_DATE, 3, 2);
-  //     (CURRENT_DATE, 3, 3);
+       (CURRENT_DATE, 3, 2),
+       (CURRENT_DATE, 3, 3);
 

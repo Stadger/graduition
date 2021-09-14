@@ -13,16 +13,13 @@ import java.util.Optional;
 public interface VoteRepository extends BaseRepository<Vote> {
 
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT v FROM Vote v WHERE v.created = :created and v.user.id = :userId")
-    Optional<Vote> getByUserAndDate(LocalDate created, int userId);
+    @Query("SELECT v FROM Vote v WHERE v.votedDate = :votedDate and v.user.id = :userId")
+    Optional<Vote> getByUserAndDate(LocalDate votedDate, int userId);
 
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.created DESC")
+    @Query("SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.votedDate DESC")
     List<Vote> getAll(int userId);
 
-    @Query("SELECT COUNT(v) FROM Vote v WHERE v.created = :created and v.restaurant.id = :restaurantId")
-    int countVoteByCreatedAndRestaurant(LocalDate created, int restaurantId);
-
-    @Query("SELECT v FROM Vote v WHERE  v.created = :created ORDER BY v.restaurant.id ASC")
-    List<Vote> findVoteByCreated(LocalDate created);
+    @Query("SELECT COUNT(v) FROM Vote v WHERE v.votedDate = :votedDate and v.restaurant.id = :restaurantId")
+    int countVoteByCreatedAndRestaurant(LocalDate votedDate, int restaurantId);
 }
