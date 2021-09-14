@@ -20,7 +20,7 @@ VALUES ('FirstRest'),
        ('SecondRest'),
        ('ThirdRest');
 
-INSERT INTO DISH (name, created, restaurant_id, price)
+INSERT INTO DISH (name, date_menu, restaurant_id, price)
 VALUES ('soup FirstRest', CURRENT_DATE, 1, 500),
        ('pasta FirstRest', CURRENT_DATE, 1, 300),
        ('coffe FirstRest', CURRENT_DATE, 1, 200),

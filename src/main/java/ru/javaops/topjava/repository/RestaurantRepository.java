@@ -16,10 +16,10 @@ public interface RestaurantRepository extends BaseRepository<Restaurant> {
     //return only Restraint with notNull Dishes
     //if need all Restaurant add "  WHERE d is null OR r.id = :restaurantId" and property Dishes make Set
     @EntityGraph(attributePaths = {"dishes"})
-    @Query("SELECT r FROM Restaurant r LEFT JOIN r.dishes d WHERE r.id = :restaurantId and d.created = :created")
-    Optional<Restaurant> getWithDish(int restaurantId, LocalDate created);
+    @Query("SELECT r FROM Restaurant r LEFT JOIN r.dishes d WHERE r.id = :restaurantId and d.dateMenu = :dateMenu")
+    Optional<Restaurant> getWithDish(int restaurantId, LocalDate dateMenu);
 
     @EntityGraph(attributePaths = {"dishes"})
-    @Query("SELECT r FROM Restaurant r LEFT OUTER JOIN r.dishes d WHERE d.created = :created ORDER BY r.name ASC ")
-    List<Restaurant> getAllWithDish(LocalDate created);
+    @Query("SELECT r FROM Restaurant r LEFT OUTER JOIN r.dishes d WHERE d.dateMenu = :dateMenu ORDER BY r.name ASC ")
+    List<Restaurant> getAllWithDish(LocalDate dateMenu);
 }

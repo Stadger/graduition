@@ -12,17 +12,17 @@ import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "created", "name"}, name = "dish_unique_restorant_date_name_idx")})
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "date_menu", "name"}, name = "dish_unique_restorant_date_name_idx")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 @ToString(callSuper = true, exclude = {"restaurant"})
 public class Dish extends NamedEntity {
 
-    @Column(name = "created", nullable = false, columnDefinition = "DATE default CURRENT_DATE")
+    @Column(name = "date_menu", nullable = false, columnDefinition = "DATE default CURRENT_DATE")
     @NotNull
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDate created = LocalDate.now();
+    private LocalDate dateMenu = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)

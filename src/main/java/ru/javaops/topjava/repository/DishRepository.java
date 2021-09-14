@@ -21,10 +21,10 @@ public interface DishRepository extends BaseRepository<Dish> {
     @Query("SELECT d FROM Dish d WHERE d.id=:id AND d.restaurant.id=:restaurantId")
     Optional<Dish> get(@Param("id") int id, @Param("restaurantId") int restaurantId);
 
-    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId ORDER BY d.created DESC,d.name ASC ")
+    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId ORDER BY d.dateMenu DESC,d.name ASC ")
     List<Dish> getByRestaurant(@Param("restaurantId") int restaurantId);
 
-    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId AND d.created=:date ORDER BY d.name ASC ")
+    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId AND d.dateMenu=:date ORDER BY d.name ASC ")
     List<Dish> getByRestaurantAndDate(@Param("date") LocalDate date, @Param("restaurantId") int restaurantId);
 
 }
