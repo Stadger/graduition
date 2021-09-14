@@ -1,6 +1,7 @@
 package ru.javaops.topjava.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javaops.topjava.model.Restaurant;
@@ -10,17 +11,21 @@ import ru.javaops.topjava.repository.RestaurantRepository;
 import ru.javaops.topjava.repository.UserRepository;
 import ru.javaops.topjava.repository.VoteRepository;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.util.List;
 
 import static ru.javaops.topjava.util.validation.ValidationUtil.checkTimeDeadline;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class VoteService {
     private final VoteRepository repository;
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
+
+    @Setter
+    private Clock clock = Clock.systemDefaultZone();
 
     public Vote getByUserIdAndDate(int userId, LocalDate date) {
         return repository.getByUserAndDate(date, userId).orElse(null);
@@ -36,7 +41,7 @@ public class VoteService {
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
         Vote vote = repository.getByUserAndDate(date, userId).orElse(new Vote(null, date, user, restaurant));
         if (!vote.isNew()) {
-            checkTimeDeadline(date);
+            checkTimeDeadline(date, clock);
         }
         vote.setRestaurant(restaurant);
         return repository.save(vote);

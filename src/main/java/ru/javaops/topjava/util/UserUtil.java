@@ -3,7 +3,6 @@ package ru.javaops.topjava.util;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.StringUtils;
 import ru.javaops.topjava.model.Role;
 import ru.javaops.topjava.model.User;
 import ru.javaops.topjava.to.UserTo;

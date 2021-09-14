@@ -9,16 +9,18 @@ import ru.javaops.topjava.error.NotFoundException;
 import ru.javaops.topjava.error.VoteDeadlineException;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 
+import static ru.javaops.topjava.util.DateTimeUtil.DEADLINE;
+
 @UtilityClass
 public class ValidationUtil {
-    private final static LocalTime DEADLINE = LocalTime.of(19,0);
 
-    public static void checkTimeDeadline(LocalDate date) {
-        if (!date.equals(LocalDate.now()) || DEADLINE.isBefore(LocalTime.now())){
+    public static void checkTimeDeadline(LocalDate date, Clock clock) {
+        if (!date.equals(LocalDate.now()) || DEADLINE.isBefore(LocalTime.now(clock))) {
             throw new VoteDeadlineException("Vote after deadline");
         }
     }

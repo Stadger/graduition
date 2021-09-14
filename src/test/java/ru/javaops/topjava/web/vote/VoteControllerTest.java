@@ -8,6 +8,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javaops.topjava.model.Vote;
 import ru.javaops.topjava.repository.VoteRepository;
+import ru.javaops.topjava.service.VoteService;
 import ru.javaops.topjava.web.AbstractControllerTest;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -23,9 +24,13 @@ class VoteControllerTest extends AbstractControllerTest {
     @Autowired
     private VoteRepository repository;
 
+    @Autowired
+    private VoteService service;
+
     @Test
     @WithUserDetails(value = USER_MAIL)
     void createWithLocation() throws Exception {
+        service.setClock(CLOCK_BEFORE_DEADLINE);
         Vote newVote = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .param("restaurantId", "1"))
@@ -36,6 +41,17 @@ class VoteControllerTest extends AbstractControllerTest {
         newVote.setId(newId);
         MATCHER.assertMatch(created, newVote);
         MATCHER.assertMatch(repository.getById(newId), newVote);
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void createAfterDeadline() throws Exception {
+        service.setClock(CLOCK_AFTER_DEADLINE);
+        Vote newVote = getNew();
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+                .param("restaurantId", "1"))
+                .andExpect(status().isMethodNotAllowed());
+
     }
 
     @Test

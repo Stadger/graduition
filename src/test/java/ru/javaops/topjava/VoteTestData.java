@@ -4,15 +4,19 @@ import ru.javaops.topjava.model.Vote;
 import ru.javaops.topjava.to.VoteTo;
 import ru.javaops.topjava.util.VoteUtil;
 
+import java.time.Clock;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.javaops.topjava.RestaurantTestData.*;
+import static ru.javaops.topjava.util.DateTimeUtil.DEADLINE;
+import static ru.javaops.topjava.util.DateTimeUtil.createClock;
 
 public class VoteTestData {
     public static final LocalDate VOTE_TEST_DATE = LocalDate.now();
     public static final LocalDate VOTE_TEST_DATE2 = LocalDate.of(2021, 8, 25);
-    public static final LocalDate VOTE_CREATED_DATE = LocalDate.of(2021, 6, 26);
+    public static final Clock CLOCK_BEFORE_DEADLINE = createClock(VOTE_TEST_DATE, DEADLINE.minusHours(1));
+    public static final Clock CLOCK_AFTER_DEADLINE = createClock(VOTE_TEST_DATE, DEADLINE.plusHours(1));
     public static final MatcherFactory.Matcher<Vote> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Vote.class, "restaurant", "user");
     public static final MatcherFactory.Matcher<VoteTo> MATCHER_TO = MatcherFactory.usingIgnoringFieldsComparator(VoteTo.class);
     public static MatcherFactory.Matcher<Vote> WITH_USER_AND_REST_MATCHER =
