@@ -1,4 +1,5 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f283439da3b44e7aa9a0b6c38c1ff32c)](https://www.codacy.com/gh/Stadger/graduition/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Stadger/graduition&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://app.travis-ci.com/Stadger/topjava.svg?branch=master)](https://travis-ci.com/JavaWebinar/topjava)
 # REST API service project (Graduation TopJava)
 
 ----
