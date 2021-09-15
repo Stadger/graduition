@@ -53,6 +53,7 @@ public class VoteController {
 
     @GetMapping
     public List<VoteTo> getAll(@AuthenticationPrincipal AuthUser authUser) {
+        log.info("get all votes for user {}", authUser.id());
         return VoteUtil.getTos(service.getAll(authUser.id()));
     }
 

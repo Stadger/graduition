@@ -27,7 +27,7 @@ import static ru.javaops.topjava.util.validation.ValidationUtil.checkNew;
 @Slf4j
 @AllArgsConstructor
 public class AdminRestaurantController {
-    static final String REST_URL = "/api/admin/restaurant";
+    static final String REST_URL = "/api/admin/restaurants";
     private final RestaurantService service;
     private final RestaurantRepository repository;
 
@@ -37,8 +37,9 @@ public class AdminRestaurantController {
         return ResponseEntity.of(repository.findById(id));
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Restaurant> getAll() {
+        log.info("get all Restaurants");
         return service.getAll();
     }
 
