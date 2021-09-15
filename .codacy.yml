@@ -1,0 +1,6 @@
+---
+exclude_paths:
+  - 'src/main/java/ru/javaops/topjava/web/**'
+  - 'src/test/java/ru/javaops/topjava/**'
+  - '**.md'
+  - '**.sql'

@@ -3,13 +3,11 @@ package ru.javaops.topjava.to;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
-import org.hibernate.validator.constraints.Range;
 import ru.javaops.topjava.HasIdAndEmail;
 import ru.javaops.topjava.util.validation.NoHtml;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;

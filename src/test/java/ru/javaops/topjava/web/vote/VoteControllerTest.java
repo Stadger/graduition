@@ -47,8 +47,7 @@ class VoteControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = USER_MAIL)
     void createAfterDeadline() throws Exception {
         service.setClock(CLOCK_AFTER_DEADLINE);
-        Vote newVote = getNew();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+        perform(MockMvcRequestBuilders.post(REST_URL)
                 .param("restaurantId", "1"))
                 .andExpect(status().isMethodNotAllowed());
 

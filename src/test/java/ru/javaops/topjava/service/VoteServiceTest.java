@@ -9,7 +9,6 @@ import ru.javaops.topjava.model.Vote;
 import ru.javaops.topjava.repository.VoteRepository;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static ru.javaops.topjava.RestaurantTestData.RESTAURANT1_ID;
 import static ru.javaops.topjava.RestaurantTestData.RESTAURANT3_ID;
 import static ru.javaops.topjava.VoteTestData.*;
 
