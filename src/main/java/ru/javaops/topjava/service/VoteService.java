@@ -15,7 +15,7 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.javaops.topjava.util.validation.ValidationUtil.checkTimeDeadline;
+import static ru.javaops.topjava.util.validation.ValidationUtil.*;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +45,14 @@ public class VoteService {
         }
         vote.setRestaurant(restaurant);
         return repository.save(vote);
+    }
+
+    @Transactional
+    public void update(int id, int userId, int restaurantId, LocalDate date) {
+        Vote vote = checkOptional(repository.getByUserAndDate(date, userId),id);
+        assureIdConsistent(vote,id);
+        checkTimeDeadline(date, clock);
+        vote.setRestaurant(restaurantRepository.getById(restaurantId));
+        repository.save(vote);
     }
 }

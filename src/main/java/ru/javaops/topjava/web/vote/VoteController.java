@@ -43,12 +43,12 @@ public class VoteController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(value = "/vote")
+    @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
+    public void update(@PathVariable int id, @AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
         int userId = authUser.id();
         log.info("update vote {} for user {}", restaurantId, userId);
-        service.save(userId, restaurantId, LocalDate.now());
+        service.update(id,userId, restaurantId, LocalDate.now());
     }
 
     @GetMapping
@@ -57,7 +57,7 @@ public class VoteController {
         return VoteUtil.getTos(service.getAll(authUser.id()));
     }
 
-    @GetMapping("/vote")
+    @GetMapping("/date")
     public ResponseEntity<VoteTo> get(@AuthenticationPrincipal AuthUser authUser,
                                       @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("get vote {} for user {}", date, authUser.id());
