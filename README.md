@@ -37,13 +37,14 @@ As a result, provide a link to github repository. It should contain the code, RE
 API documentation generate Swagger: http://localhost:8080/swagger-ui.html
 
 # Authentication requests
-*  /api/profile post: register request. Available to unregistered users
+*  /api/profile post
+   * register request. Available to unregistered users
 *  /api/admin/**
-  *  Available to admin-role users
-  *  use base authentication: admin@gmail.com/admin
+   *  Available to admin-role users
+   *  use base authentication: admin@gmail.com/admin
 *  /api/**
-  *  Available to registered(admin and user) users
-  *  use base authentication: user@yandex.ru/password
+   *  Available to registered(admin and user) users
+   *  use base authentication: user@yandex.ru/password
 # Requirements
 * JDK 16
 * Maven
