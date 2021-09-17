@@ -14,6 +14,8 @@ import ru.javaops.topjava.service.RestaurantService;
 import java.time.LocalDate;
 import java.util.List;
 
+import static ru.javaops.topjava.util.DateTimeUtil.checkDate;
+
 @RestController
 @RequestMapping(value = RestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
@@ -26,15 +28,15 @@ public class RestaurantController {
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> getWithDishes(@PathVariable int id,
                                                     @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        log.info("get Restaurant {} with dish", id);
-        if (date == null) date = LocalDate.now();
+        date = checkDate(date);
+        log.info("get Restaurant {} with dish and date{}", id, date);
         return ResponseEntity.of(repository.getWithDish(id, date));
     }
 
     @GetMapping()
     public List<Restaurant> getAllWithDishes(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        log.info("get Restaurant with dish");
-        if (date == null) date = LocalDate.now();
+        date = checkDate(date);
+        log.info("get Restaurant with dish for date{}", date);
         return service.getAllWithDish(date);
     }
 }

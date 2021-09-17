@@ -19,6 +19,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
+import static ru.javaops.topjava.util.DateTimeUtil.checkDate;
 import static ru.javaops.topjava.util.validation.ValidationUtil.assureIdConsistent;
 import static ru.javaops.topjava.util.validation.ValidationUtil.checkNew;
 
@@ -72,14 +73,14 @@ public class AdminRestaurantController {
     @GetMapping("rate/{id}")
     public ResponseEntity<RestaurantTo> getWithRate(@PathVariable int id,
                                                     @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        if (date == null) date = LocalDate.now();
+        date = checkDate(date);
         log.info("get Restaurant {} with rating for date{}", id, date);
         return ResponseEntity.of(service.getTo(id, date));
     }
 
     @GetMapping("rate/all")
     public List<RestaurantTo> getAllWithRate(@RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        if (date == null) date = LocalDate.now();
+        date = checkDate(date);
         log.info("get Restaurants with rating for date{}", date);
         return service.getAllTo(date);
     }

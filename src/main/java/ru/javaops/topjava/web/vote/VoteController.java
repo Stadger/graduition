@@ -17,11 +17,12 @@ import ru.javaops.topjava.to.VoteTo;
 import ru.javaops.topjava.util.VoteUtil;
 import ru.javaops.topjava.web.AuthUser;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import static ru.javaops.topjava.util.DateTimeUtil.checkDate;
 
 @RestController
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,7 +49,7 @@ public class VoteController {
     public void update(@PathVariable int id, @AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
         int userId = authUser.id();
         log.info("update vote {} for user {}", restaurantId, userId);
-        service.update(id,userId, restaurantId, LocalDate.now());
+        service.update(id, userId, restaurantId, LocalDate.now());
     }
 
     @GetMapping
@@ -60,8 +61,8 @@ public class VoteController {
     @GetMapping("/date")
     public ResponseEntity<VoteTo> get(@AuthenticationPrincipal AuthUser authUser,
                                       @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        date = checkDate(date);
         log.info("get vote {} for user {}", date, authUser.id());
-        if (date == null) date = LocalDate.now();
         Optional<VoteTo> to = repository.getByUserAndDate(date, authUser.id()).map(VoteUtil::getTo);
         return ResponseEntity.of(to);
     }
