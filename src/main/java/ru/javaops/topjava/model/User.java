@@ -58,12 +58,6 @@ public class User extends NamedEntity implements HasIdAndEmail {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
-//    @OrderBy("created DESC")
-//    @JsonManagedReference
-//    @OnDelete(action = OnDeleteAction.CASCADE) //https://stackoverflow.com/a/44988100/548473
-//    private List<Vote> votes;
-
     public User(User u) {
         this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
     }
